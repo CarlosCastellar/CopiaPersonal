@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Slf4j
 @Service
@@ -31,17 +33,19 @@ public class UsuarioService {
 
     private static final String MSJ_EXITO = "Se guardo exitosamente el usuario";
     private static final String MSJ_ERROR = "El correo '%s' ya se encuentra registrado en el sistema";
+    private static final String MSJ_NO_ENCONTRADO = "No existe un usuario con el correo: %s";
+    private static final String MSJ_NO_VALIDO = "La contrase\u00f1a es incorrecta, intentelo de nuevo.";
     private final UsuarioRepository usuarioRepository;
-
-    private  final RolRepository rolRepository;
+    private final RolRepository rolRepository;
     private final ObjectMapper mapper;
-
+  
     public Optional<String> save(UsuarioDto dto) throws DuplicadoException {
         if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new DuplicadoException(MSJ_ERROR.formatted(dto.getEmail()));
         }
         Usuario usuario = mapper.convertValue(dto, Usuario.class);
         usuario.setRol(rolRepository.getByNombre(dto.getRolName()).get());
+        usuario.setContrasena(encode(usuario.getContrasena()));
         usuarioRepository.save(usuario);
         log.info(MSJ_EXITO);
         return Optional.of(MSJ_EXITO);
@@ -113,4 +117,24 @@ public class UsuarioService {
         return Optional.ofNullable(mensaje);
     }
 
+
+    public UsuarioDto auth(String email, String contrasena) throws RecursoNoEncontradoException {
+        Optional<Usuario> usuarioOp = usuarioRepository.findByEmail(email);
+        if (usuarioOp.isEmpty()) {
+            throw new RecursoNoEncontradoException(MSJ_NO_ENCONTRADO.formatted(email));
+        } else {
+            Usuario usuario = usuarioOp.get();
+            if (usuario.getContrasena().equals(encode(contrasena))) {
+                return mapper.convertValue(usuario, UsuarioDto.class);
+            } else {
+                throw new RecursoNoEncontradoException(MSJ_NO_VALIDO.formatted(email));
+            }
+        }
+    }
+
+    private String encode(String valor) {
+        return Base64.getEncoder().encodeToString(
+                valor.getBytes(StandardCharsets.UTF_8));
+    }
+  
 }

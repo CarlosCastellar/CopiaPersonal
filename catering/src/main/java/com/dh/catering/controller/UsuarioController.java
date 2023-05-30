@@ -7,6 +7,7 @@ import com.dh.catering.exceptions.NombreDuplicadoException;
 import com.dh.catering.exceptions.RecursoNoEncontradoException;
 import com.dh.catering.service.UsuarioService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.dh.catering.dto.LoginDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -80,4 +81,9 @@ public class UsuarioController {
                 .orElse(ResponseEntity.badRequest().build());
     }
 
+    @PostMapping("/auth")
+    @Operation(summary = "autentica un usuario")
+    public ResponseEntity<?> auth(@RequestBody @Valid LoginDto dto) throws RecursoNoEncontradoException {
+        return ResponseEntity.ok(usuarioService.auth(dto.getEmail(), dto.getContrasena()));
+    }
 }

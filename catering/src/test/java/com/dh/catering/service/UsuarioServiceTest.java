@@ -25,7 +25,7 @@ class UsuarioServiceTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     @Mock
-    private UsuarioRepository repositorio;
+    private UsuarioRepository repository;
     private UsuarioService servicio;
 
     @BeforeEach
