@@ -1,28 +1,19 @@
 package com.dh.catering.service;
 
-import com.dh.catering.domain.Producto;
 import com.dh.catering.domain.Usuario;
-import com.dh.catering.dto.ProductoDto;
 import com.dh.catering.dto.UsuarioDto;
 import com.dh.catering.exceptions.DuplicadoException;
-import com.dh.catering.exceptions.NombreDuplicadoException;
 import com.dh.catering.exceptions.RecursoNoEncontradoException;
 import com.dh.catering.repository.RolRepository;
 import com.dh.catering.repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -125,7 +116,9 @@ public class UsuarioService {
         } else {
             Usuario usuario = usuarioOp.get();
             if (usuario.getContrasena().equals(encode(contrasena))) {
-                return mapper.convertValue(usuario, UsuarioDto.class);
+                UsuarioDto usuarioDto = mapper.convertValue(usuario, UsuarioDto.class);
+                usuarioDto.setRolName(usuario.getRol().getNombre());
+                return usuarioDto;
             } else {
                 throw new RecursoNoEncontradoException(MSJ_NO_VALIDO.formatted(email));
             }
