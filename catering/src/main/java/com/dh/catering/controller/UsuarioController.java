@@ -29,7 +29,7 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    @PostMapping("/resgistrar")
+    @PostMapping("/")
     @Operation(summary = "registrar un usuario")
     public ResponseEntity<String> registrar(@RequestBody @Valid UsuarioDto dto) throws DuplicadoException {
         return usuarioService.save(dto)
@@ -37,7 +37,7 @@ public class UsuarioController {
                 .orElseGet(ResponseEntity.internalServerError()::build);
     }
 
-    @GetMapping("/todos")
+    @GetMapping("/")
     @Operation(summary = "Listar todos los usuarios")
     public ResponseEntity<List<UsuarioDto>> listar() {
         return ResponseEntity.ok(usuarioService.listar());
