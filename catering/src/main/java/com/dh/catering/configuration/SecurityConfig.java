@@ -35,9 +35,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/products/new","/products/authenticate").permitAll()
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
+                        "/usuarios/{id}","/usuarios/auth","/usuarios/","/usuarios/id/{id}","/usuarios/email/{email}",
+                        "/productos/nombre/{nombre}","/productos/id/{id}","/productos/categoriaId/{id}","/productos/",
+                        "/categorias/").permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/products/**")
+                .authorizeHttpRequests().requestMatchers("/usuarios/**","/roles/**","/productos/**","/categorias/**")
                 .authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

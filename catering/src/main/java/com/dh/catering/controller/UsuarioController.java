@@ -5,6 +5,7 @@ import com.dh.catering.dto.UsuarioDto;
 import com.dh.catering.exceptions.DuplicadoException;
 import com.dh.catering.exceptions.NombreDuplicadoException;
 import com.dh.catering.exceptions.RecursoNoEncontradoException;
+import com.dh.catering.service.JwtService;
 import com.dh.catering.service.UsuarioService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.dh.catering.dto.LoginDto;
@@ -14,6 +15,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +32,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final UsuarioService usuarioService;
+    private UsuarioService usuarioService;
+
+    private AuthenticationManager authenticationManager;
+
+    private JwtService jwtService;
 
     @PostMapping("/")
     @Operation(summary = "registrar un usuario")
@@ -83,7 +92,12 @@ public class UsuarioController {
 
     @PostMapping("/auth")
     @Operation(summary = "autentica un usuario")
-    public ResponseEntity<?> auth(@RequestBody @Valid LoginDto dto) throws RecursoNoEncontradoException {
-        return ResponseEntity.ok(usuarioService.auth(dto.getEmail(), dto.getContrasena()));
+    public String authenticateAndGetToken(@RequestBody LoginDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getContrasena()));
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(loginDto.getEmail());
+        } else {
+            throw new UsernameNotFoundException("Solicitud de usuario no valida!");
+        }
     }
 }
