@@ -36,9 +36,9 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**",
-                        "/usuarios/{id}","/usuarios/auth","/usuarios/","/usuarios/id/{id}","/usuarios/email/{email}",
-                        "/productos/nombre/{nombre}","/productos/id/{id}","/productos/categoriaId/{id}","/productos/",
-                        "/categorias/").permitAll()
+                        "/usuarios/registrar","/usuarios/auth",
+                        "/productos/todos","/productos/nombre/{nombre}","/productos/id/{id}","/productos/categoriaId/{id}",
+                        "/categorias/todos","/categorias/nombre/{nombre}","/categorias/id/{id}").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/usuarios/**","/roles/**","/productos/**","/categorias/**")
                 .authenticated().and()

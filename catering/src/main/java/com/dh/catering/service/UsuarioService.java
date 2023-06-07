@@ -9,6 +9,7 @@ import com.dh.catering.repository.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,17 @@ public class UsuarioService {
     private static final String MSJ_ERROR = "El correo '%s' ya se encuentra registrado en el sistema";
     private static final String MSJ_NO_ENCONTRADO = "No existe un usuario con el correo: %s";
     private static final String MSJ_NO_VALIDO = "La contrase\u00f1a es incorrecta, intentelo de nuevo.";
+
+    @Autowired
     private final UsuarioRepository usuarioRepository;
+
+    @Autowired
     private final RolRepository rolRepository;
+
+    @Autowired
     private final ObjectMapper mapper;
 
+    @Autowired
     private PasswordEncoder passwordEncoder;
   
     public Optional<String> save(UsuarioDto dto) throws DuplicadoException {

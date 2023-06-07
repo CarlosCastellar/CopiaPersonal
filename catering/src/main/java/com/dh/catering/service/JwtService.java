@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class JwtService {
 
 
-    public static final String SECRET = "({~,nK|pfk6OD/)l6OYecl6<mAC+W3";
+    public static final String SECRET = "WNi3oF3NfduzvwUiOPlnDdUUjIlMcv7fX28ms3udpPM=";
 
 
     public String extractUsername(String token) {
