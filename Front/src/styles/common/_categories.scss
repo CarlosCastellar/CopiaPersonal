@@ -1,0 +1,39 @@
+.categories {
+    padding: 15px 30px;
+
+    @media (max-width: 800px) {
+        padding: 30px 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    &__container {
+        margin-top: 15px;
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+
+        @media (max-width: 800px) {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+
+    &__loading {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+
+    &__empty {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        color: silver;
+        margin: 15px 5px;
+    }
+}

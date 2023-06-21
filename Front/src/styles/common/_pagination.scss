@@ -1,0 +1,40 @@
+.pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $primary-font;
+    margin: 0.8rem 0 ;
+
+    button{
+        padding: 0.1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        height: 33.19px;
+
+        &:hover{
+            background-color: #cccccca6 ;
+        }
+
+        img{
+            height: 30px;
+        }
+    }
+
+    span{
+        padding: 0.5rem;
+        border-color: beige;
+        background-color: rgba(0,0,0,.04);
+        color: rgba(0, 0, 0, 0.63);
+        font-weight: 600;
+        border-radius:1px;
+        margin: 0 0.2rem;
+        height: 33.19px;
+    }
+
+    
+}
+
+.opaque-image {
+    opacity: 0.5; 
+  }

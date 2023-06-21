@@ -1,0 +1,86 @@
+@import './variables';
+//LAYOUT
+@import "./layout/header";
+@import "./layout/footer";
+//PAGES
+@import "./pages/detailPage";
+@import "./pages/loginPage";
+@import "./pages/registerPage";
+@import "./pages/adminListProducts";
+@import "./pages/adminCreateProduct";
+@import "./pages/categoryPage";
+@import "./pages/userPage";  
+@import "./pages/adminEditProduct";  
+//COMMON   
+@import "./common/search";
+@import "./common/categories";
+@import "./common/category";
+@import "./common/products";
+@import "./common/product";
+@import "./common/productDetail";
+@import "./common/formatText";
+@import "./common/productsList";
+@import "./common/productItem";
+@import "./common/productDetail";
+@import "./common/carousel";
+@import "./common/pagination";
+@import "./common/productForm";
+@import "./common/productRating";
+@import "./common/popupUser";
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 60px;
+
+    @media (max-width: 800px) {
+        padding-top: 155px;
+    }
+}
+
+.section-container {
+    flex: 1;
+    background-color: $gray-light;
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    color: $error;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-control {
+    margin: 15px 0;
+    width: 100%;
+}
+
+.input-file {
+    margin-top: 15px;
+    padding: 15px 15px;
+    border: 1px solid silver;
+    border-radius: 6px;
+    max-width: 98%;
+}
+
+.preview {
+    margin-top: 15px;
+    width: 100%;
+
+    img {
+        width: 100%;
+    }
+}
+
