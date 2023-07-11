@@ -10,10 +10,8 @@ const AdminListUsers = () => {
 
   useEffect(() => {
     if (logedUser) {
-      console.log({ jwt: logedUser.jwt });
-      console.log({ Autorization: `Bearer ${logedUser.jwt}` });
       axios
-        .get("http://localhost:8080/usuarios/todos", {
+        .get(import.meta.env.VITE_BASE_URI + "/usuarios/todos", {
           headers: {
             Authorization: `Bearer ${logedUser.jwt}`,
           },
